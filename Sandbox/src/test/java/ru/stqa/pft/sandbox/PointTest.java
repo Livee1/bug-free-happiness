@@ -3,21 +3,41 @@ package ru.stqa.pft.sandbox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.awt.*;
+/**
+ * Подключить к модулю sandbox тестовый фреймворк TestNG и сделать несколько
+ * тестов для класса Point,
+ * которые проверяют, что расстояние между точками вычисляется правильно.
+ */
 
 public class PointTest {
+    Point p1 = new Point(3, 5);
+    Point p2 = new Point(3, 6);
+
+    Point p3 = new Point(3.6, 9.7);
+    Point p4 = new Point(7.2, 4.6);
+    Point p5 = new Point(-4, 8);
+
     @Test
-    public void distance() {
-            Point p1 = new Point(3, 5);
-            Point p2 = new Point(3, 6);
-            Assert.assertEquals(p1.distance(p2), 1.0);
+    // Проверяем с целыми числами
+    public void testDistance() {
+        Assert.assertEquals(p1.distance(p2), 1.0);
+    }
 
-            Point p3 = new Point(7, 9);
-            Point p4 = new Point(7, 6);
-            Assert.assertEquals(p3.distance(p4), 3.0);
+    @Test
+    // Проверяем с дробными числами
+    public void testDistanceFraction() {
+        Assert.assertEquals(p3.distance(p4), 6.2425956140054435);
+    }
 
-            Assert.assertEquals(p1.distance(p4), 4.123105625617661);
-            Assert.assertEquals(p2.distance(p3), 5.0);
-            Assert.assertEquals(p2.distance(p2), 0.0);
+    @Test
+    //Проверяем, если координаты точек совпали
+    public void testDistanceIdentical() {
+        Assert.assertEquals(p2.distance(p2), 0.0);
+    }
+
+    @Test
+    //Проверяем отрицательные числа
+    public void testDistanceNegNum() {
+        Assert.assertEquals(p5.distance(p2), 7.280109889280518);
     }
 }
